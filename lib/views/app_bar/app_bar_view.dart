@@ -6,42 +6,36 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
+  // Función para obtener el saludo según la hora del día
+  String _getSaludo() {
+    final hora = DateTime.now().hour;
+    if (hora < 12) {
+      return '¡Hola! ☀️';
+    } else if (hora < 18) {
+      return '¡Hola! 🌤️';
+    } else {
+      return '¡Hola! 🌙';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Obtener la hora actual para mostrar el saludo adecuado
-    final hour = DateTime.now().hour;
-    String greeting = '';
-    
-    if (hour < 12) {
-      greeting = '¡Buenos días!';
-    } else if (hour < 18) {
-      greeting = '¡Buenas tardes!';
-    } else {
-      greeting = '¡Buenas noches!';
-    }
+    // Detectar si estamos en móvil o web basado en el ancho de pantalla
+    final anchoPantalla = MediaQuery.of(context).size.width;
+    final esMobil = anchoPantalla < 600;
 
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
+      // Logo y texto "Comfenalco" siempre visibles
       title: Row(
         children: [
-          // Logo de la universidad Comfenalco
-          Container(
-            height: 40,
-            width: 40,
-            decoration: const BoxDecoration(
-              color: Color(0xFF0D47A1),
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text(
-                'C',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
+          ClipOval(
+            child: Image.network(
+              'https://play-lh.googleusercontent.com/KQvcG7JZrO7ZwEb-MDKkOWekFrWS30Xs8HKEhpqQ0xkG8hCFvdXw8rMH2sytHj6Ehg0',
+              height: 36,
+              width: 36,
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(width: 8),
@@ -50,38 +44,91 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
             style: TextStyle(
               color: Color(0xFF0D47A1),
               fontWeight: FontWeight.bold,
-              fontSize: 24,
+              fontSize: 18,
             ),
           ),
         ],
       ),
+      // Contenido de la derecha (saludo + botón)
       actions: [
-        Row(
-          children: [
-            const Icon(Icons.wb_sunny, color: Color(0xFFFFD54F)),
-            const SizedBox(width: 8),
-            Text(
-              greeting,
-              style: const TextStyle(
-                color: Color(0xFF9E9E9E),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF0D47A1),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+        if (esMobil)
+          // En móvil, mostramos el saludo y el botón juntos
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _getSaludo(),
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 109, 109, 109),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.3,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              child: const Text('Iniciar sesión'),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0D47A1),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    minimumSize: const Size(
+                      0,
+                      32,
+                    ), // Tamaño mínimo más pequeño para móvil
+                  ),
+                  child: const Text(
+                    'Iniciar sesión',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 16),
-          ],
-        ),
+          )
+        else
+          // En web, saludo y botón tienen más espacio
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Row(
+              children: [
+                Text(
+                  _getSaludo(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0D47A1),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                  ),
+                  child: const Text(
+                    'Iniciar sesión',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

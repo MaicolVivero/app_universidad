@@ -16,41 +16,41 @@ final List<Servicio> servicios = [
   Servicio(
     icon: Icons.discount_outlined,
     title: 'Cupones',
-    color: Colors.purple,
+    color: const Color(0xFF9C27B0).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.people_outline,
     title: 'Subsidios',
-    color: Colors.blue,
+    color: const Color(0xFF00BCD4).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.attach_money,
     title: 'Créditos',
-    color: Colors.blue,
+    color: const Color(0xFFFFC107).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.description_outlined,
     title: 'Certificados',
-    color: Colors.orange,
+    color: const Color(0xFFFFEB3B).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.flight_outlined,
     title: 'Recreación',
-    color: Colors.green,
+    color: const Color(0xFF009688).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.shopping_cart_outlined,
     title: 'Ventas',
-    color: Colors.blue,
+    color: const Color(0xFF2196F3).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.account_balance_wallet_outlined,
     title: 'Billetera',
-    color: Colors.purple,
+    color: const Color(0xFFE91E63).withOpacity(0.2),
   ),
   Servicio(
     icon: Icons.computer_outlined,
     title: 'Oficina Virtual',
-    color: Colors.indigo,
+    color: const Color(0xFF4CAF50).withOpacity(0.2),
   ),
 ];
